@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Dammmien/static-file-server/issues"
   },
+ "bin": {
+    "static-file-server": "bin.js"
+  },
   "homepage": "https://github.com/Dammmien/static-file-server#readme"
 }
