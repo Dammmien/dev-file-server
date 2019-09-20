@@ -4,6 +4,7 @@
   "description": "Minimalist static file server",
   "main": "index.js",
   "scripts": {
+    "start": "node bin.js",
     "test": "node index.spec.js"
   },
   "repository": {
