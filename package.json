@@ -1,0 +1,19 @@
+{
+  "name": "static-file-server",
+  "version": "1.0.0",
+  "description": "Minimalist static file server",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dammmien/static-file-server.git"
+  },
+  "author": "Damien Duhamel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dammmien/static-file-server/issues"
+  },
+  "homepage": "https://github.com/Dammmien/static-file-server#readme"
+}
