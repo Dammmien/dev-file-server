@@ -9,6 +9,7 @@ module.exports = {
   ".jpg": "image/jpeg",
   ".js": "application/javascript",
   ".json": "application/json",
+  ".mjs": "application/javascript",
   ".mp3": "audio/mpeg",
   ".mp4": "video/mp4",
   ".oga": "audio/ogg",
