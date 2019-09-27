@@ -1,12 +1,17 @@
 const assert = require('assert').strict;
 const http2 = require('http2');
 const fs = require('fs');
+const serve = require('./index.js');
+const port = 8000;
 
 const child_process = require('child_process');
 child_process.execSync(`openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -keyout localhost-privkey.pem -out localhost-cert.pem`);
 
 const ca = fs.readFileSync('localhost-cert.pem');
-const client = http2.connect('https://localhost:8000', { ca });
+
+const server = serve(port, './', true);
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+const client = http2.connect(`https://localhost:${port}`, { ca });
 
 const get = (path, data = '', headers = '') => new Promise((res, rej) => {
 	const req = client.request({ ':path': path });
@@ -52,6 +57,7 @@ const run = async () => {
 	await test('/foo.css', null, 404, 'text/css');
 
 	client.close();
+	server.close();
 };
 
 run();

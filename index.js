@@ -52,4 +52,6 @@ module.exports = (port = 3000, folder = process.cwd(), http2 = false) => {
   server.listen(port);
 
   console.log(`${folder} served at http://localhost:${port}\n`);
+
+  return server;
 };
