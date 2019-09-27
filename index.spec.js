@@ -1,6 +1,10 @@
 const assert = require('assert').strict;
 const http2 = require('http2');
 const fs = require('fs');
+
+const child_process = require('child_process');
+child_process.execSync(`openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -keyout localhost-privkey.pem -out localhost-cert.pem`);
+
 const ca = fs.readFileSync('localhost-cert.pem');
 const client = http2.connect('https://localhost:8000', { ca });
 
