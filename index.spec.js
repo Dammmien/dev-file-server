@@ -1,31 +1,19 @@
 const assert = require('assert').strict;
-const http2 = require('http2');
 const fs = require('fs');
-const serve = require('./index.js');
-const port = 8000;
+const server = require('./index.js');
+const http = require('http');
 
-const child_process = require('child_process');
-child_process.execSync(`openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -keyout localhost-privkey.pem -out localhost-cert.pem`);
-
-const ca = fs.readFileSync('localhost-cert.pem');
-
-const server = serve(port, './', true);
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
-const client = http2.connect(`https://localhost:${port}`, { ca });
-
-const get = (path, data = '', headers = '') => new Promise((res, rej) => {
-	const req = client.request({ ':path': path });
-
-	req.on('response', response => headers = response);
-	req.on('data', chunk => data += chunk);
-	req.on('error', rej);
-	req.on('end', () => res({ data, headers }));
-
-	req.end();
+const get = (path, data = '') => new Promise((resolve, rej) => {
+	http.get(`http://localhost:${process.env.PORT}${path}`, res => {
+	  res.on('data', (chunk) => data += chunk);
+	  res.on('end', () => resolve({ data, headers: res.headers, statusCode: res.statusCode }));
+	}).on("error", (err) => {
+	  reject({});
+	});
 });
 
 const test = async (path, filePath, status, contentType) => {
-	const { data, headers } = await get(path);
+	const { data, headers, statusCode } = await get(path);
 	const file = filePath ? fs.readFileSync(filePath, 'utf8') : '';
 
 	try {
@@ -35,7 +23,7 @@ const test = async (path, filePath, status, contentType) => {
 	}
 
 	try {
-		assert.strictEqual(headers[':status'], status);
+		assert.strictEqual(statusCode, status);
 	} catch({ actual, expected}) {
 		console.error( `Incorrect status for path: '${path}', received: ${actual} instead of ${expected}`);
 	}
@@ -48,15 +36,14 @@ const test = async (path, filePath, status, contentType) => {
 };
 
 const run = async () => {
-	await test('/', './index.html', 200, 'text/html');
-	await test('/index.html', './index.html', 200, 'text/html');
-	await test('/bar', './index.html', 200, 'text/html');
-	await test('/bar/toto', './index.html', 200, 'text/html');
-	await test('/foo', './foo/index.html', 200, 'text/html');
-	await test('/test.png', './test.png', 200, 'image/png');
+	await test('/', './example/index.html', 200, 'text/html');
+	await test('/index.html', './example/index.html', 200, 'text/html');
+	await test('/bar', './example/index.html', 200, 'text/html');
+	await test('/bar/toto', './example/index.html', 200, 'text/html');
+	await test('/foo', './example/foo/index.html', 200, 'text/html');
+	await test('/test.png', './example/test.png', 200, 'image/png');
 	await test('/foo.css', null, 404, 'text/css');
 
-	client.close();
 	server.close();
 };
 
