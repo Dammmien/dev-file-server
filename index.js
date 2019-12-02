@@ -16,7 +16,7 @@ const sendFile = (request) => {
 };
 
 const send404 = (request, err) => {
-  request.res.setHeader('Content-Type', request.contentType);
+  request.res.setHeader('Content-Type', request.contentType || 'text/html');
   request.res.writeHead(404, { 'Content-Length': Buffer.byteLength(err.message) });
   request.res.end();
   console.log(`\x1b[31m ${request.res.statusCode} - ${request.pathname} - ${'404 ERROR'} as ${request.res.getHeader('Content-Type')}`);

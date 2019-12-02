@@ -43,6 +43,7 @@ const run = async () => {
 	await test('/foo', './example/foo/index.html', 200, 'text/html');
 	await test('/test.png', './example/test.png', 200, 'image/png');
 	await test('/foo.css', null, 404, 'text/css');
+	await test('/...', null, 404, 'text/html');
 
 	server.close();
 };
