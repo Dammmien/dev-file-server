@@ -1,1 +1,1 @@
-# static-file-server
+# dev-file-server

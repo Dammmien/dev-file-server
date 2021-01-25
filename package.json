@@ -1,26 +1,23 @@
 {
-  "name": "@dammmien/static-file-server",
-  "version": "1.3.1",
-  "description": "Minimalist static file server",
+  "name": "dev-file-server",
+  "version": "1.0.0",
+  "description": "Basic static file server for development",
   "main": "index.js",
   "scripts": {
-    "start": "PORT=8000 FOLDER=./example node bin.js",
-    "test": "PORT=8000 FOLDER=./example node index.spec.js"
+    "test": "node index.spec.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dammmien/static-file-server.git"
+    "url": "git+https://github.com/Dammmien/dev-file-server.git"
   },
-  "author": "Damien Duhamel",
+  "main": "src/index.js",
+  "author": "Damien Duhamel<d.damien@live.fr>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Dammmien/static-file-server/issues"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "url": "https://github.com/Dammmien/dev-file-server/issues"
   },
   "bin": {
-    "static-file-server": "bin.js"
+    "dev-file-server": "bin.js"
   },
-  "homepage": "https://github.com/Dammmien/static-file-server#readme"
+  "homepage": "https://github.com/Dammmien/dev-file-server#readme"
 }

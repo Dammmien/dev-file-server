@@ -1,3 +1,6 @@
 #!/usr/bin/env node
 
-require('./index.js');
+const Server = require('./index.js');
+const server = new Server(process.env.FOLDER);
+
+server.listen(process.env.PORT);
