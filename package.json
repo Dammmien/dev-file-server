@@ -10,7 +10,6 @@
     "type": "git",
     "url": "git+https://github.com/Dammmien/dev-file-server.git"
   },
-  "main": "src/index.js",
   "author": "Damien Duhamel<d.damien@live.fr>",
   "license": "ISC",
   "bugs": {
